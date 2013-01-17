@@ -6,6 +6,7 @@ function roundNumber(num, dec) {
 	var result = Math.round(num*Math.pow(10,dec))/Math.pow(10,dec);
 	return result;
 }
+
 function openDB() {
     db = window.openDatabase("shop", "1.0", "PhoneGap", 200000);
 }
@@ -18,7 +19,6 @@ function loadList() {
 	openDB();
 	db.transaction(createTable,errorCB,successCB);
 }
-
 
 function createTable(tx) {
 	var query="CREATE TABLE IF NOT EXISTS Shops(id INTEGER PRIMARY KEY, Name TEXT NOT NULL UNIQUE, Url TEXT NOT NULL, Pin TEXT)";
@@ -153,7 +153,7 @@ function showList(tx, result) {
 						'<p>'+row['Url']+'</p>'+
 						'</tr></table>'+
 						'</a></li>');
-	});
+		});
 
 	storeList.listview( "refresh" );
 }
@@ -338,20 +338,19 @@ function showEdit(tx, result) {
 function editShopSettings(editName, editUrl, editPin) {
 	var edit = $("#divEditShop");
 	edit.empty();
-	var text='<div data-role="collapsible" data-collapsed="false">'+
-				'<h3>'+editName+'</h3>'+
-				'<div data-role="fieldcontain">'+
-				'<label for="'+editName+'addressEdit">Shop address:</label>'+
-				'<input type="url" name="addressEdit" id="'+editName+'addressEdit" value="'+editUrl+'" placeholder="address" />'+		
-				'<br />'+
-				'<label for="'+editName+'pinEdit">Pin:</label>'+
-				'<input type="password" name="pinEdit" id="'+editName+'pinEdit" value="'+editPin+'" placeholder="pin" />'+
-				'</div>'+
-				'<fieldset class="ui-grid-a">'+
-					'<div class="ui-block-a"><button type="submit" data-theme="a" ><a href="#main" data-role="button" onClick="saveEditShopSettings('+"'"+editName+"'"+');">Save</a></button></div>'+	   
-					'<div class="ui-block-b"><button type="submit" data-theme="c"><a href="#settings" data-role="button">Cancel</a></button></div>'+
-				'</fieldset>'+
-				'</div>';
+	var text='<h3>'+editName+'</h3><hr/>'+
+			'<div data-role="fieldcontain">'+
+			'<label for="'+editName+'addressEdit">Shop address:</label>'+
+			'<input type="url" name="addressEdit" id="'+editName+'addressEdit" value="'+editUrl+'" placeholder="address" />'+		
+			'<br />'+
+			'<label for="'+editName+'pinEdit">Pin:</label>'+
+			'<input type="password" name="pinEdit" id="'+editName+'pinEdit" value="'+editPin+'" placeholder="pin" />'+
+			'</div>'+
+			'<fieldset class="ui-grid-a">'+
+				'<div class="ui-block-a"><button type="submit" data-theme="a" ><a href="#main" data-role="button" onClick="saveEditShopSettings('+"'"+editName+"'"+');">Save</a></button></div>'+	   
+				'<div class="ui-block-b"><button type="submit" data-theme="c"><a href="#settings" data-role="button">Cancel</a></button></div>'+
+			'</fieldset>'+
+			'</div>';
 	edit.append(text);
 	edit.trigger("create");
 }
